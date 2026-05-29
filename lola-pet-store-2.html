@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LOLA Pet Store – لوله ستور</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --sky: #38bdf8;
+      --sky-light: #e0f7ff;
+      --sky-mid: #7dd3fc;
+      --orange: #fb923c;
+      --orange-deep: #ea580c;
+      --green: #4ade80;
+      --green-deep: #16a34a;
+      --bg: #f0f9ff;
+      --white: #ffffff;
+      --dark: #0c2340;
+      --card: #ffffff;
+      --shadow: 0 8px 32px rgba(56,189,248,0.13);
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 40%, #7dd3fc 70%, #bae6fd 100%);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.07'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .header-bubbles span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      animation: float 6s ease-in-out infinite;
+    }
+    .header-bubbles span:nth-child(1) { width:120px;height:120px;top:10%;left:5%;animation-delay:0s;}
+    .header-bubbles span:nth-child(2) { width:70px;height:70px;top:60%;left:15%;animation-delay:1s;}
+    .header-bubbles span:nth-child(3) { width:90px;height:90px;top:20%;right:8%;animation-delay:2s;}
+    .header-bubbles span:nth-child(4) { width:50px;height:50px;top:70%;right:20%;animation-delay:0.5s;}
+    .header-bubbles span:nth-child(5) { width:160px;height:160px;bottom:-40px;right:-40px;animation-delay:1.5s;}
+    @keyframes float {
+      0%,100%{transform:translateY(0) scale(1);}
+      50%{transform:translateY(-18px) scale(1.05);}
+    }
+    .header-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px 20px 50px;
+    }
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .logo-icon {
+      width: 80px; height: 80px;
+      background: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+      animation: bounce 2.5s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-8px);}
+    }
+    .logo-text {
+      font-size: 52px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -1px;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-family: 'Cairo', sans-serif;
+    }
+    .logo-text span { color: var(--orange); }
+    .store-name-ar {
+      font-size: 22px;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+    .tagline {
+      font-size: 26px;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      margin-bottom: 10px;
+    }
+    .tagline-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 34px;
+    }
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 15px 38px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(251,146,60,0.45);
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .header-cta:hover {
+      background: var(--orange-deep);
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 14px 32px rgba(234,88,12,0.45);
+    }
+    .wave {
+      width: 100%; display: block;
+      margin-top: -2px;
+    }
+
+    /* ===== SECTION TITLES ===== */
+    .section { padding: 64px 16px; }
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-title h2 {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--dark);
+      font-family: 'Cairo', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title p {
+      font-size: 16px;
+      color: #64748b;
+      margin-top: 8px;
+    }
+    .pill {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--sky), var(--sky-mid));
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 30px;
+      margin-bottom: 8px;
+    }
+
+    /* ===== CATEGORIES ===== */
+    .cats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .cat-card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 24px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .cat-card::before {
+      content:'';
+      position:absolute;inset:0;
+      background: var(--cat-grad);
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 22px;
+    }
+    .cat-card:hover::before { opacity: 1; }
+    .cat-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      border-color: var(--cat-color);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .cat-card:hover .cat-icon { transform: scale(1.15) rotate(-5deg); }
+    .cat-card:hover .cat-name { color: var(--white); position: relative; z-index:1; }
+    .cat-card:hover .cat-desc { color: rgba(255,255,255,0.85); position: relative; z-index:1; }
+    .cat-icon {
+      font-size: 58px;
+      margin-bottom: 16px;
+      display: block;
+      transition: transform 0.3s;
+      position: relative; z-index:1;
+    }
+    .cat-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+      transition: color 0.3s;
+      position: relative; z-index:1;
+    }
+    .cat-desc {
+      font-size: 14px;
+      color: #64748b;
+      transition: color 0.3s;
+      position: relative; z-index:1;
+    }
+    .cat-card.cats { --cat-color: #38bdf8; --cat-grad: linear-gradient(135deg,#38bdf8,#0ea5e9); }
+    .cat-card.birds { --cat-color: #fb923c; --cat-grad: linear-gradient(135deg,#fb923c,#ea580c); }
+    .cat-card.rodents { --cat-color: #4ade80; --cat-grad: linear-gradient(135deg,#4ade80,#16a34a); }
+
+    /* ===== PRODUCTS ===== */
+    #products { background: linear-gradient(180deg, #f0f9ff 0%, #fff 100%); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 640px) {
+      .products-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    }
+    @media (min-width: 900px) {
+      .products-grid { grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    }
+    .product-card {
+      background: white;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(56,189,248,0.10);
+      transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+      border: 1.5px solid #e0f2fe;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(56,189,248,0.2);
+      border-color: var(--sky);
+    }
+    .product-emoji {
+      height: 130px;
+      background: linear-gradient(135deg, #e0f7ff, #bae6fd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 62px;
+      position: relative;
+    }
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--orange);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .product-info { padding: 16px; text-align: center; }
+    .product-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 6px;
+      line-height: 1.4;
+      text-align: center;
+    }
+    .product-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .product-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .product-price {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--orange-deep);
+    }
+    .product-price span { font-size: 12px; font-weight: 500; color: #94a3b8; }
+    .order-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s;
+      font-family: 'Tajawal', sans-serif;
+      flex: unset;
+      width: 100%;
+      justify-content: center;
+    }
+    .order-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(37,211,102,0.4);
+    }
+    .order-btn svg { width:16px; height:16px; fill:white; }
+
+    /* ===== INFO SECTION ===== */
+    #info { background: linear-gradient(135deg, var(--dark) 0%, #0f3460 100%); }
+    #info .section-title h2 { color: white; }
+    #info .section-title p { color: #94a3b8; }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .info-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 28px 22px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .info-card:hover {
+      background: rgba(56,189,248,0.15);
+      border-color: var(--sky);
+      transform: translateY(-4px);
+    }
+    .info-icon {
+      font-size: 40px;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .info-label {
+      font-size: 13px;
+      color: var(--sky-mid);
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .info-value {
+      font-size: 16px;
+      color: white;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+    .whatsapp-big {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 40px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      font-size: 20px;
+      font-weight: 800;
+      padding: 18px 44px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(37,211,102,0.35);
+      transition: all 0.3s;
+      max-width: 380px;
+      margin-inline: auto;
+      display: flex;
+    }
+    .whatsapp-big:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(37,211,102,0.45);
+    }
+    .whatsapp-big svg { width:28px; height:28px; fill:white; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #051626;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 14px;
+    }
+    footer strong { color: var(--sky); }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56,189,248,0.2);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .nav-brand {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--dark);
+      font-family: 'Cairo', sans-serif;
+    }
+    .nav-brand span { color: var(--sky); }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      color: #475569;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover {
+      background: var(--sky-light);
+      color: var(--dark);
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity:0; transform: translateY(30px); transition: all 0.6s ease; }
+    .reveal.visible { opacity:1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      .logo-text { font-size: 36px; }
+      .tagline { font-size: 20px; }
+      .nav-links { display: none; }
+      .product-emoji { height: 100px; font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">LOLA <span>🐾</span></div>
+  <div class="nav-links">
+    <a href="#categories">الأقسام</a>
+    <a href="#products">المنتجات</a>
+    <a href="#info">تواصل</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="header-bubbles">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="header-content">
+    <div class="logo-wrap">
+      <div class="logo-icon">🐾</div>
+      <div class="logo-text">LOLA<span>.</span></div>
+    </div>
+    <div class="store-name-ar">لوله ستور – Pet Store</div>
+    <div class="tagline">نهتم بحيوانك مثل ما تهتم بنفسك 💛</div>
+    <div class="tagline-sub">كل ما يحتاجه أليفك في مكان واحد</div>
+    <a href="#products" class="header-cta">
+      🛒 تسوق الآن
+    </a>
+  </div>
+</header>
+<svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="#f0f9ff"/>
+</svg>
+
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+  <div class="section-title reveal">
+    <div class="pill">الأقسام الرئيسية</div>
+    <h2>🏪 تسوق حسب النوع</h2>
+    <p>كل ما تحتاجه لأليفك في مكان واحد</p>
+  </div>
+  <div class="cats-grid">
+    <div class="cat-card cats reveal" onclick="scrollToSection('products')">
+      <span class="cat-icon">🐱</span>
+      <div class="cat-name">مستلزمات القطط</div>
+      <div class="cat-desc">طعام، رمل، ألعاب، ناموسيات وأكثر</div>
+    </div>
+    <div class="cat-card birds reveal" onclick="scrollToSection('products')">
+      <span class="cat-icon">🦜</span>
+      <div class="cat-name">طيور وأقفاص</div>
+      <div class="cat-desc">أقفاص كوكتيل، بادجي، بذور وفيتامينات</div>
+    </div>
+    <div class="cat-card rodents reveal" onclick="scrollToSection('products')">
+      <span class="cat-icon">🐹</span>
+      <div class="cat-name">هامستر وقوارض</div>
+      <div class="cat-desc">أقفاص، عجلات، فرو، طعام مخصص</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-title reveal">
+    <div class="pill">منتجات مميزة</div>
+    <h2>⭐ أبرز منتجاتنا</h2>
+    <p>جودة عالية بأسعار مناسبة</p>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <!-- JS will render -->
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="section" id="info">
+  <div class="section-title reveal">
+    <div class="pill">معلومات المتجر</div>
+    <h2>📍 تواصل معنا</h2>
+    <p>نحن هنا لمساعدتك</p>
+  </div>
+  <div class="info-grid">
+    <div class="info-card reveal">
+      <span class="info-icon">📍</span>
+      <div class="info-label">العنوان</div>
+      <div class="info-value">النجف الأشرف<br>حي الأمير – شارع الزهور</div>
+    </div>
+    <div class="info-card reveal">
+      <span class="info-icon">📞</span>
+      <div class="info-label">رقم الهاتف</div>
+      <div class="info-value">
+        <a href="tel:+9647713162676" style="color:white;text-decoration:none;">07713162676</a>
+      </div>
+    </div>
+    <div class="info-card reveal">
+      <span class="info-icon">🕐</span>
+      <div class="info-label">أوقات العمل</div>
+      <div class="info-value">يومياً<br>9:00 ص – 10:00 م</div>
+    </div>
+    <div class="info-card reveal">
+      <span class="info-icon">🚚</span>
+      <div class="info-label">التوصيل</div>
+      <div class="info-value">توصيل داخل النجف<br>بأسعار رمزية</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:40px;">
+    <a href="https://wa.me/9647713162676?text=مرحباً لوله ستور، أريد الاستفسار عن منتج" class="whatsapp-big" target="_blank">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      تواصل عبر واتساب
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>LOLA Pet Store – لوله ستور</strong> · جميع الحقوق محفوظة 🐾</p>
+  <p style="margin-top:6px;">النجف الأشرف – حي الأمير – شارع الزهور</p>
+</footer>
+
+
+
+<script>
+  const products = [
+    { id:1, name:"طعام قطط بريميوم",    desc:"تغذية متكاملة للقطط البالغة",  price:"8,500", unit:"دينار", emoji:"🐱", badge:"الأكثر مبيعاً" },
+    { id:2, name:"قفص كوكتيل كبير",     desc:"فضاء واسع مع وعاء ماء وغذاء",  price:"35,000", unit:"دينار", emoji:"🦜", badge:"جديد" },
+    { id:3, name:"فيتامينات للطيور",    desc:"مكملات غذائية للريش والمناعة", price:"4,500", unit:"دينار", emoji:"💊", badge:null },
+    { id:4, name:"قفص هامستر مع عجلة", desc:"بلاستيك آمن وعجلة صامتة",       price:"22,000", unit:"دينار", emoji:"🐹", badge:"عرض خاص" },
+    { id:5, name:"رمل قطط معطر",        desc:"تحكم في الرائحة لأسبوع",       price:"6,000", unit:"دينار", emoji:"🐾", badge:null },
+  ];
+
+  const PHONE = "9647713162676";
+
+  function orderWA(name, price, unit) {
+    const msg = encodeURIComponent(`مرحباً لوله ستور 🐾\nأريد طلب: ${name}\nالسعر: ${price} ${unit}\nالرجاء التأكيد، شكراً!`);
+    window.open(`https://wa.me/${PHONE}?text=${msg}`, '_blank');
+  }
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior:'smooth' });
+  }
+
+  const grid = document.getElementById('productsGrid');
+  products.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'product-card reveal';
+    card.style.transitionDelay = (i * 0.08) + 's';
+    card.innerHTML = `
+      <div class="product-emoji">
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+        ${p.emoji}
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">${p.price} <span>${p.unit}</span></div>
+          <button class="order-btn" onclick="orderWA('${p.name}', '${p.price}', '${p.unit}')">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            اطلب الآن
+          </button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
